@@ -1,0 +1,76 @@
+@import url("../vendor/normalize.css");
+@import url("../vendor/fonts/inter.css");
+/*@import url("../blocks/page/page.css");*/
+
+.page {
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", Arial, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.header {
+  max-width: 880px;
+  padding: 45px 0 41px;
+  margin: 0 auto;
+  border-bottom: 1px solid #545454;
+  /*display: flex;
+  justify-content: space-between;*/
+}
+
+.header__logo {
+  width: 142px;
+  height: 33px;
+  background-image: url("../images/header-logo.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.content {
+  max-width: 880px;
+  padding: 40px 0 0;
+  margin: 0 auto;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile__avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  object-fit: scale-down;
+  background-color: #999;
+}
+
+.profile__info {
+  background-color: #666;
+}
+
+.profile__name {
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1.14;
+  margin: 0;
+}
+
+.profile__description {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;
+  margin: 16px 0 0;
+}
