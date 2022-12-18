@@ -1,59 +1,34 @@
-let page = document.querySelector(".page");
-let nameProfile = page.querySelector(".profile__name");
-let jobProfile = page.querySelector(".profile__job");
-let editButton = page.querySelector(".profile__edit-button");
+let page = document.querySelector('.page');
+let nameProfile = page.querySelector('.profile__name');
+let jobProfile = page.querySelector('.profile__job');
+let editButton = page.querySelector('.profile__edit-button');
 
-let closeButton = page.querySelector(".popup__close-button");
+let closeButton = page.querySelector('.popup__close-button');
 
-let popup = page.querySelector(".popup");
+let popup = page.querySelector('.popup');
 
-// Находим форму в DOM
-let formElement = popup.querySelector(".popup__form"); // Воспользуйтесь методом querySelector()
-// Находим поля формы в DOM
-let nameInput = formElement.querySelector(".popup__name"); // Воспользуйтесь инструментом .querySelector()
-let jobInput = formElement.querySelector(".popup__job"); // Воспользуйтесь инструментом .querySelector()
+// Находим форму и поля формы в DOM
+let formElement = popup.querySelector('.popup__form');
+let nameInput = formElement.querySelector('.popup__name');
+let jobInput = formElement.querySelector('.popup__job');
 
 // Функция открытия Popup
 function showPopup() {
-  // console.log(popup.classList);
-  popup.classList.add("popup_opened"); // Показываю попап: Добавляю класс с display flex к оверлею
-  page.classList.add("noscroll"); // Убираю скролл у окна
-
-  //console.log(nameProfile.textContent);
-  //console.log(jobProfile.innerHTML);
-
-  //console.log(nameInput.value);
+  popup.classList.add('popup_opened'); // Показываю попап: Добавляю класс с display flex к оверлею
 
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
-
-  // Закрываем попап без сохранения при нажатии Esc. ХЗ как оно работает, мы это еще не проходили
-  // https://stackoverflow.com/questions/1481626/how-to-handle-esc-keydown-on-javascript-popup-window)
-  // Надо как-то отключить выполнение этого правила/скрипта, после того как окно (попап) закрыто.
-  // Сейчас в консоли (escape pressed) считается количество выполнений/нажатий Esc
-  window.onkeydown = function (event) {
-    if (event.keyCode == 27) {
-      //console.log("escape pressed");
-      closePopup();
-    }
-  };
 }
-editButton.addEventListener("click", showPopup); // Отслеживаем событие "клик по кнопке правка"
 
 // Функция закрытия Popup
 function closePopup() {
-  if (popup.classList.contains("popup_opened")) {
-    popup.classList.remove("popup_opened"); // Скрываю попап: Убираю класс с display flex к оверлею - остается display none
-  }
-  if (page.classList.contains("noscroll")) {
-    page.classList.remove("noscroll"); // Возвращаю скролл у окна
-  }
+  popup.classList.remove('popup_opened'); // Скрываю попап: Убираю класс с display flex к оверлею - остается display none
 }
-closeButton.addEventListener("click", closePopup); // Отслеживаем событие "клик по кнопке попапа закрыть"
 
 // Шаблон функции из Задания
 function handleFormSubmit(evt) {
-  // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
+  // Эта строчка отменяет стандартную отправку формы.
+  // Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
   evt.preventDefault();
   // Получите значение полей jobInput и nameInput из свойства value
   // Выберите элементы, куда должны быть вставлены значения полей
@@ -63,6 +38,6 @@ function handleFormSubmit(evt) {
   closePopup();
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener("submit", handleFormSubmit);
+editButton.addEventListener('click', showPopup); // Отслеживаем событие 'клик по кнопке правка'
+closeButton.addEventListener('click', closePopup); // Отслеживаем событие 'клик по кнопке попапа закрыть'
+formElement.addEventListener('submit', handleFormSubmit); // Прикрепляем обработчик к форме: он будет следить за событием 'submit'

@@ -8,7 +8,7 @@
   box-sizing: border-box;
   background-image: url("../../../images/icon-edit.svg");
   background-repeat: no-repeat;
-  background-size: 12px 12px; /* так мне больше нравится, 10*10 слишком маленький */
+  background-size: 10px 10px;
   background-position: center center;
   transition: opacity 0.1s linear 0s;
   cursor: pointer;
