@@ -1,0 +1,19 @@
+.popup__name {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 42px 0 0;
+  padding: 12px 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.popup__name:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .popup__name {
+    margin: 62px 0 0;
+  }
+}

@@ -1,0 +1,4 @@
+.noscroll {
+  overflow-y: hidden;
+  padding-right: 15px; /* вместо полосы прокрутки, которая исчезает */
+}

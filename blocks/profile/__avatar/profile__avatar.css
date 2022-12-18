@@ -1,0 +1,8 @@
+.profile__avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  object-fit: scale-down;
+  flex: 0 0 auto;
+}
