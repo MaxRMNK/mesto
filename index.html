@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css">
+  <!-- Пришлось сделать фавикон т.к. в консоли FF все время показывалась ошибка, что фавиконки нет -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-32x32.png"/>
   <title>Mesto</title>
 </head>
 
@@ -19,14 +21,78 @@
     <section class="profile">
       <img src="./images/cousteau.jpg" class="profile__avatar" alt="Жак-Ив Кусто">
       <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <p class="profile__description">Исследователь океана</p>
+        <div class="profile__text">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+        <button class="profile__edit-button"></button>
       </div>
-      <div class="profile__add-button"></div>
+      <button class="profile__add-button"></button>
+    </section>
+
+    <section class="elements">
+      <div class="element">
+        <img src="./images/tinypng-igor-sporynin.jpg" class="element__image" alt="Фестиваль воздушных шаров">
+        <div class="element__caption">
+          <h2 class="element__header">Карачаевск</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img src="./images/tinypng-mauro-lima.jpg" class="element__image" alt="">
+        <div class="element__caption">
+          <h2 class="element__header">Гора Эльбрус</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img src="./images/tinypng-anastasiia-rozumna.jpg" class="element__image" alt="">
+        <div class="element__caption">
+          <h2 class="element__header">Домбай</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img src="./images/tinypng-tim-mossholder.jpg" class="element__image" alt="Фестиваль воздушных шаров">
+        <div class="element__caption">
+          <h2 class="element__header">Каппадокия</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img src="./images/tinypng-tom-podmore.jpg" class="element__image" alt="">
+        <div class="element__caption">
+          <h2 class="element__header">Карачаево-Черкесия</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
+      <div class="element">
+        <img src="./images/tinypng-tom-podmore2.jpg" class="element__image" alt="">
+        <div class="element__caption">
+          <h2 class="element__header">Хабаровск</h2>
+          <button class="element__like"></button>
+        </div>
+      </div>
     </section>
   </main>
-  <footer class="footer"></footer>
 
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+  </footer>
+
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__header">Редактировать профиль</h3>
+      <form action="" class="popup__form">
+        <input type="text" class="popup__name">
+        <input type="text" class="popup__job">
+        <button class="popup__save-button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./vendor/script.js"></script>
 </body>
 
 </html>
