@@ -9,8 +9,8 @@ let popup = page.querySelector('.popup');
 
 // Находим форму и поля формы в DOM
 let formElement = popup.querySelector('.popup__form');
-let nameInput = formElement.querySelector('.popup__name');
-let jobInput = formElement.querySelector('.popup__job');
+let nameInput = formElement.querySelector('.popup__input_type_name');
+let jobInput = formElement.querySelector('.popup__input_type_job');
 
 // Функция открытия Popup
 function showPopup() {

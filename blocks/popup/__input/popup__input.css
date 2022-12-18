@@ -1,13 +1,12 @@
-.popup__job {
+.popup__input {
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 18px 0 0;
   padding: 12px 0;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
 }
 
-.popup__job:focus {
+.popup__input:focus {
   outline: none;
 }
