@@ -25,9 +25,9 @@
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__job">Исследователь океана</p>
         </div>
-        <button class="profile__edit-button" type="button"></button>
+        <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
       </div>
-      <button class="profile__add-button" type="button"></button>
+      <button class="profile__add-button" type="button" aria-label="Добавить"></button>
     </section>
 
     <section class="elements">
@@ -35,42 +35,42 @@
         <img src="./images/tinypng-igor-sporynin.jpg" class="element__image" alt="Фестиваль воздушных шаров">
         <div class="element__caption">
           <h2 class="element__header">Карачаевск</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="element">
         <img src="./images/tinypng-mauro-lima.jpg" class="element__image" alt="Золотые ворота">
         <div class="element__caption">
           <h2 class="element__header">Гора Эльбрус</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="element">
         <img src="./images/tinypng-anastasiia-rozumna.jpg" class="element__image" alt="Гаспра">
         <div class="element__caption">
           <h2 class="element__header">Гаспра</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="element">
         <img src="./images/tinypng-tim-mossholder.jpg" class="element__image" alt="Кони">
         <div class="element__caption">
           <h2 class="element__header">Каппадокия</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="element">
         <img src="./images/tinypng-tom-podmore.jpg" class="element__image" alt="Набережная">
         <div class="element__caption">
           <h2 class="element__header">Карачаево-Черкесия</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
       <article class="element">
         <img src="./images/tinypng-tom-podmore2.jpg" class="element__image" alt="Еще одна набережная">
         <div class="element__caption">
           <h2 class="element__header">Хабаровск</h2>
-          <button class="element__like" type="button"></button>
+          <button class="element__like" type="button" aria-label="Нравится"></button>
         </div>
       </article>
     </section>
@@ -82,11 +82,11 @@
 
   <div class="popup">
     <div class="popup__container">
-      <button class="popup__close-button" type="button"></button>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
       <form action="#" class="popup__form" name="editProfile"><!-- Надеюсь такой action будет правильным -->
-        <input type="text" class="popup__input popup__input_type_name" name="editName">
-        <input type="text" class="popup__input popup__input_type_job" name="editJob">
+        <input type="text" class="popup__input popup__input_type_name" name="editName" placeholder="Имя" required>
+        <input type="text" class="popup__input popup__input_type_job" name="editJob" placeholder="Профессия" required>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
