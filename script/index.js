@@ -10,8 +10,8 @@ const closeButtonAddCard = page.querySelector('.popup__close-button_add-card');
 
 
 // let popup = page.querySelector('.popup'); // Было
-const popupEditProfile = page.querySelector('.popup__edit-profile');
-const popupAddCard = page.querySelector('.popup__add-card');
+const popupEditProfile = page.querySelector('.popup_edit-profile');
+const popupAddCard = page.querySelector('.popup_add-card');
 
 // Находим форму и поля формы в DOM
 // let formElement = popup.querySelector('.popup__form'); // Было
