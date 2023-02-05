@@ -20,15 +20,15 @@ const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 
 const formCard = popupAddCard.querySelector('.popup__form');
-const imageTitleInput = formCard.querySelector('.popup__input_type_add-title');
-const imageLinkInput = formCard.querySelector('.popup__input_type_add-link');
+const addTitleInput = formCard.querySelector('.popup__input_type_add-title');
+const addLinkInput = formCard.querySelector('.popup__input_type_add-link');
 
 
-/**********************************************************************************
- * Общие функции
+
+
+/**
+ * Код из уроков
  */
-
-// Открывает popup
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened'); // Показываю попап
   //console.log(popupElement);
@@ -42,10 +42,6 @@ function closePopup(popup) {
 }
 
 
-/**********************************************************************************
- * Форма Редактирование профиля
- */
-
 // Ф. отправки/сохранения формы Редактирование профиля
 function handleFormSubmitProfile(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
@@ -55,6 +51,50 @@ function handleFormSubmitProfile(evt) {
   //console.log(evt.target.name);
 }
 
+// Ф. отправки/сохранения формы Добавления карточки
+function handleFormSubmitCard(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+  const item = [
+    {
+      name: addTitleInput.value,
+      link: addLinkInput.value
+    }
+  ];
+  addCards(item);
+  closePopup(popupAddCard);
+}
+
+// Шаблон функции из Задания "Спринт 4"
+/*function handleFormSubmit(evt) {
+  // Эта строчка отменяет стандартную отправку формы.
+  // Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
+  evt.preventDefault();
+  // Получите значение полей jobInput и nameInput из свойства value
+  // Выберите элементы, куда должны быть вставлены значения полей
+  // Вставьте новые значения с помощью textContent
+  if(evt.target.name === 'editProfileForm'){
+    nameProfile.textContent = nameInput.value;
+    jobProfile.textContent = jobInput.value;
+    closePopup(popupEditProfile);
+    //console.log(evt.target.name);
+  }
+  else if (evt.target.name === 'addCardForm'){
+    const item = [
+      {
+        name: addTitleInput.value,
+        link: addLinkInput.value
+      }
+    ];
+    addCards(item);
+    closePopup(popupAddCard);
+  }
+  else {
+    console.log(evt.target.name + ' что-то пошло не так');
+  }
+}*/
+
+
+
 // Открывает попап редактирования профиля
 editButton.addEventListener('click', function () {
   openPopup(popupEditProfile);
@@ -63,115 +103,30 @@ editButton.addEventListener('click', function () {
   jobInput.value = jobProfile.textContent;
 });
 
-// Отслеживает событие 'клик по кнопке закрыть' у формы Редактирование профиля
+// Открывает попап добавления картинки
+addButton.addEventListener('click', function() {
+  // Стираются значения введенные в форму ранее
+  addTitleInput.value = '';
+  addLinkInput.value = '';
+
+  openPopup(popupAddCard);
+});
+
+// Отслеживают события 'клик по кнопке закрыть' у форм
 closeButtonEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
-
-// Обработчик формы, следит за событием 'submit'
-formElement.addEventListener('submit', handleFormSubmitProfile);
-
-
-/**********************************************************************************
- * Форма Добавление карточек
- */
-// Ф. отправки/сохранения формы Добавления карточки
-function handleFormSubmitCard(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
-  const item = [
-    {
-      name: imageTitleInput.value,
-      link: imageLinkInput.value
-    }
-  ];
-  addCards(item);
-  closePopup(popupAddCard);
-}
-
-// Отслеживает событие 'клик по кнопке закрыть' у формы Добавить карточку
 closeButtonAddCard.addEventListener('click', () => closePopup(popupAddCard));
 
-// Обработчик формы, следит за событием 'submit'
+// Обработчики форм, следят за событием 'submit'
+formElement.addEventListener('submit', handleFormSubmitProfile);
 formCard.addEventListener('submit', handleFormSubmitCard);
 
 
 
-/**********************************************************************************
- * Popup картинок
- */
-
-// Открывает попап добавления картинки
-addButton.addEventListener('click', function() {
-  // Стираются значения введенные в форму ранее
-  imageTitleInput.value = '';
-  imageLinkInput.value = '';
-  openPopup(popupAddCard);
-});
-
-/*******************************************************************
- * Функция для добавления и удаления popup картинки
- * Вариант 1
- * При клике по картинке из template создается popup элемент, а при закрытии popup, он удаляется.
- * Проблема: Не работает плавное открытие и закрытие
- */
-/*
-function showImage(event) {
-  //console.log(event.target.src);
-  //console.log(event.target.alt);
-
-  // Выбирает template для popup картинки
-  const popupImageTemplate = page.querySelector('#popup_image').content;
-
-  // Делает копию  template для дальнейшего наполнения
-  const addPopupImage = popupImageTemplate.querySelector('.popup_image').cloneNode(true);
-  // Наполняет контентом скопированный ранее template
-  addPopupImage.querySelector('.popup__large-image').src = event.target.src;
-  addPopupImage.querySelector('.popup__large-image').alt = event.target.alt;
-  addPopupImage.querySelector('.popup__caption-image').textContent = event.target.alt;
-  //console.log(addPopupImage);
-
-  // Добавляет блок popup картинки на страницу
-  allCards.after(addPopupImage);
-
-  // Ищет на странице и открывает popup картинки
-  const popupImage = page.querySelector('.popup_image');
-  //console.log(popupImage);
-
-  openPopup(popupImage); // открываем попап с картинкой
-
-  const closeButtonPopupImage = page.querySelector('.popup__close-button_image');
-  // Закрывает popup картинки и удаляет ранее добавленный на страницу код popup'а картинки
-  closeButtonPopupImage.addEventListener('click', function(){
-    closePopup(popupImage)
-    popupImage.remove();
-  });
-}
-*/
-
-/**
- * Функция для добавления и удаления popup картинки
- * Вариант 2
- * При клике по картинке берется уже имеющаяся заготовка popup и в ней меняются ссылка и описание картинки.
- * Все работает, но мне кажется это не лучшее решение.
- */
-function showImage(event) {
-  // Выбирает элемент popup, в который нужно добавлять картинки
-  const popupImage = document.querySelector('.popup_image');
-
-  // Заменяет значения ссылки и описания
-  popupImage.querySelector('.popup__large-image').src = event.target.src;
-  popupImage.querySelector('.popup__large-image').alt = event.target.alt;
-  popupImage.querySelector('.popup__caption-image').textContent = event.target.alt;
-
-  // Открывает попап с картинкой
-  openPopup(popupImage);
-
-  // Находит кнопку Закрыть; Отслеживает клик по ней; Закрывает popup картинки
-  const closeButtonPopupImage = popupImage.querySelector('.popup__close-button_image');
-  closeButtonPopupImage.addEventListener('click', () => closePopup(popupImage));
-}
 
 
-/**********************************************************************************
- * Добавление карточек и реакций к ним
+
+/** **************************************************
+ * Спринт 5
  */
 
 const initialCards = [
@@ -206,6 +161,7 @@ const elementTemplate = document.querySelector('#element').content;
 // Выбирает элемент, в который нужно добавлять карточки addCards()
 const allCards = document.querySelector('.elements');
 
+
 // Функция удаления карточки
 function deleteCard(event) {
 	event.target.closest('.element').remove();
@@ -215,6 +171,67 @@ function likeCard(event) {
   // const likeCard = event.target.classList.toggle('element__like_active'); // ХЗ зачем тут назначать переменную
   event.target.classList.toggle('element__like_active');
 }
+/*******************************************************************
+ * Функция для добавления и удаления popup картинки
+ * Вариант 1
+ * При клике по картинке из template создается popup элемент, а при закрытии popup, он удаляется.
+ * Проблема: Не работает плавное открытие и закрытие
+
+function showImage(event) {
+  //console.log(event.target.src);
+  //console.log(event.target.alt);
+
+  // Выбирает template для popup картинки
+  const popupImageTemplate = page.querySelector('#popup_image').content;
+
+  // Делает копию  template для дальнейшего наполнения
+  const addPopupImage = popupImageTemplate.querySelector('.popup_image').cloneNode(true);
+  // Наполняет контентом скопированный ранее template
+  addPopupImage.querySelector('.popup__large-image').src = event.target.src;
+  addPopupImage.querySelector('.popup__large-image').alt = event.target.alt;
+  addPopupImage.querySelector('.popup__caption-image').textContent = event.target.alt;
+  //console.log(addPopupImage);
+
+  // Добавляет блок popup картинки на страницу
+  allCards.after(addPopupImage);
+
+  // Ищет на странице и открывает popup картинки
+  const popupImage = page.querySelector('.popup_image');
+  //console.log(popupImage);
+
+  openPopup(popupImage); // открываем попап с картинкой
+
+  const closeButtonPopupImage = page.querySelector('.popup__close-button_image');
+  // Закрывает popup картинки и удаляет ранее добавленный на страницу код popup'а картинки
+  closeButtonPopupImage.addEventListener('click', function(){
+    closePopup(popupImage)
+    popupImage.remove();
+  });
+}
+ */
+/*******************************************************************
+ * Функция для добавления и удаления popup картинки
+ * Вариант 2
+ * При клике по картинке берется уже имеющаяся заготовка popup и в ней меняются ссылка и описание картинки.
+ * Проблема: Нет проблем, но мне кажется это не лучшее решение.
+ */
+function showImage(event) {
+  // Выбирает элемент popup, в который нужно добавлять картинки
+  const popupImage = document.querySelector('.popup_image');
+
+  // Заменяет значения ссылки и описания
+  popupImage.querySelector('.popup__large-image').src = event.target.src;
+  popupImage.querySelector('.popup__large-image').alt = event.target.alt;
+  popupImage.querySelector('.popup__caption-image').textContent = event.target.alt;
+
+  // Открывает попап с картинкой
+  openPopup(popupImage);
+
+  // Находит кнопку Закрыть; Отслеживает клик по ней; Закрывает popup картинки
+  const closeButtonPopupImage = popupImage.querySelector('.popup__close-button_image');
+  closeButtonPopupImage.addEventListener('click', () => closePopup(popupImage));
+}
+
 
 // Функция добавления карточкам реакций
 function addCardEventListeners (сard) {
@@ -238,6 +255,16 @@ function createCard(itemName, itemLink) {
   сard.querySelector('.element__image').alt = itemName;
   сard.querySelector('.element__header').textContent = itemName;
 
+  /*
+  // Код из учебника-тренажера. Выбирается элемент "element__like" и на него вешается обработчик событий =>
+  // => при клике выполняется функция evt.
+  сard.querySelector('.element__like').addEventListener('click', function (evt) {
+    // Объекту evt (со свойством target) добавляется/удаляется класс "активен" с помощью метода toggle
+    // toggle - переключает класс (добавляет если нет, и удаляет если есть).
+    evt.target.classList.toggle('element__like_active');
+  });
+  */
+
   addCardEventListeners(сard);
 
   return сard;
@@ -248,22 +275,14 @@ function addCards(items) {
   // Аргумент функции - массив (БД), в котором содержатся другие массивы с Названиями карточек и Ссылками на картинки
   // Функция forEach обходит массив с данными карточек
   items.forEach (el => {
-    // Вызывает createCard() для создания карточки
+    // Вызывает функцию createCard() для создания карточки
     allCards.prepend(createCard(el.name, el.link));
+    //console.log(el.name);
   });
 }
 
 // createCard();
 addCards(initialCards);
-
-
-
-
-
-
-
-
-
 
 
 
