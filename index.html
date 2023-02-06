@@ -89,7 +89,7 @@
   <!-- Попап редактирования имени и профессии -->
   <div class="popup popup_edit-profile">
     <div class="popup__container">
-      <button class="popup__close-button popup__close-button_edit-profile" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
       <form action="#" class="popup__form" name="editProfileForm"><!-- Надеюсь такой action будет правильным -->
         <input type="text" class="popup__input popup__input_type_name" name="editName" placeholder="Имя" required>
@@ -102,7 +102,7 @@
   <!-- Попап добавления карточки -->
   <div class="popup popup_add-card">
     <div class="popup__container">
-      <button class="popup__close-button popup__close-button_add-card" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Новое место</h3>
       <form action="#" class="popup__form" name="addCardForm"><!-- addCardForm, чтобы отличался в JS -->
         <input type="text" class="popup__input popup__input_type_add-title" name="addCardTitle" placeholder="Название" required>
@@ -115,7 +115,7 @@
   <!-- Попап картинки -->
   <div class="popup popup_image">
     <div class="popup__container popup__container_image">
-      <button class="popup__close-button popup__close-button_image" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <figure class="popup__illustration">
         <img class="popup__large-image" src="./images/default.jpg" alt="Описание">
         <figcaption class="popup__caption-image">Название</figcaption>
@@ -148,6 +148,7 @@
     </div>
   </template-->
 
+  <script src="./script/cards.js"></script>
   <script src="./script/index.js"></script>
 </body>
 
