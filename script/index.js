@@ -50,7 +50,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-// Совет ревьюера. Как
+// Совет ревьюера, как лучше сделать кнопки 'Закрыть popup'
 buttonCloseList.forEach(btn => {
   const popup = btn.closest('.popup');
   btn.addEventListener('click', () => closePopup(popup));
