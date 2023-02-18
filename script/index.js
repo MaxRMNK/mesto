@@ -15,8 +15,12 @@ const cardsContainer = page.querySelector('.elements');
 //const buttonCloseAddCard = page.querySelector('.popup__close-button_add-card');
 //const buttonCloseLargeImage = page.querySelector('.popup__close-button_image');
 
-// Совет ревьюера, как лучше сделать кнопки 'Закрыть popup'
+// Совет ревьюера, как лучше сделать кнопки 'Закрыть popup', Спринт 5
 const buttonCloseList = page.querySelectorAll('.popup__close-button');
+// Вариант 1. Работает на блоке popup__container
+//const popupContainerList = page.querySelectorAll('.popup__container');
+// Вариант 2. Работает на блоке popup
+const popupList = page.querySelectorAll('.popup');
 
 const popupEditProfile = page.querySelector('.popup_edit-profile');
 const popupAddCard = page.querySelector('.popup_add-card');
@@ -40,21 +44,54 @@ const imageCaption = popupLargeImage.querySelector('.popup__caption-image');
  * Общие функции
  */
 
-// Открывает popup
-function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened'); // Показываю попап
+// Ф. Закрывает popup при нажатии кнопки Escape на клавиатуре
+// Вариант 4?
+// Слушает окно браузера и закрывает popup если нажат Esc
+// Другие варианты см. в конце файла
+function closePopupWithEsc(event) {
+  const popup = page.querySelector('.popup_opened');
+  if (event.key === 'Escape') {
+    closePopup(popup);
+  }
 }
 
-// Ф. Закрытия popup
+// Ф. Закрывает popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  window.removeEventListener('keydown', closePopupWithEsc);
 }
 
-// Совет ревьюера, как лучше сделать кнопки 'Закрыть popup'
+// Вешает слушатели на кнопки закрытия popup (крестики)
+// Совет ревьюера, как лучше сделать кнопки 'Закрыть popup', Спринт 5
+// Более подробно изучали forEach и этот подход в Спринте 6
 buttonCloseList.forEach(btn => {
   const popup = btn.closest('.popup');
   btn.addEventListener('click', () => closePopup(popup));
 })
+
+// Ф. Закрывает popup при клике на оверлей
+// Вариант 2. Работает на блоке popup.
+popupList.forEach(overlay => {
+  overlay.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(overlay);
+    }
+  });
+})
+
+// Открывает popup
+function openPopup(popupElement) {
+  popupElement.classList.add('popup_opened'); // Показываю попап
+  window.addEventListener('keydown', closePopupWithEsc);
+
+  const popupForm = popupElement.querySelector('.popup__form');
+  if (popupForm) {
+    //console.log(popupForm);
+    resetValidateEror(popupForm);
+  }
+}
+
+
 
 /**********************************************************************************
  * Форма Редактирование профиля
@@ -71,10 +108,12 @@ function handleFormSubmitProfile(evt) {
 
 // Открывает попап редактирования профиля
 buttonEditProfile.addEventListener('click', function () {
-  openPopup(popupEditProfile);
   // Подставляет в поля формы текущие значения из текста страницы
   inputNameProfile.value = nameProfile.textContent;
   inputJobProfile.value = jobProfile.textContent;
+  // Подрядок важен! Сначала заполняем поля, потом открываем popup
+  // До того как поменял их местами не сбрасывались ошибки заполнения формы - resetValidateEror
+  openPopup(popupEditProfile);
 });
 
 // Отслеживает событие 'клик по кнопке закрыть' у формы Редактирование профиля
@@ -189,3 +228,187 @@ function addCards(items) {
 }
 
 addCards(initialCards);
+
+
+/**********************************************************************************
+ * Валидация форм
+ */
+
+
+
+// Функция, которая добавляет классы с ошибкой
+function showInputError(formElement, inputElement, errorMessage) {
+  //element.classList.add('popup__input_invalid');
+
+  // Находим элемент ошибки внутри самой функции
+	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+	// Остальной код такой же
+	inputElement.classList.add('popup__input_invalid');
+	errorElement.textContent = errorMessage;
+	errorElement.classList.add('form__input-error_active');
+};
+
+// Функция, которая удаляет классы с ошибкой
+function hideInputError(formElement, inputElement) {
+	// Находим элемент ошибки
+	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+	// Остальной код такой же
+	inputElement.classList.remove('popup__input_invalid');
+	errorElement.classList.remove('form__input-error_active');
+	errorElement.textContent = '';
+};
+
+// Функция принимает массив полей
+const hasInvalidInput = (inputList) => {
+	// проходим по этому массиву методом some
+	return inputList.some((inputElement) => {
+		// Если поле не валидно, колбэк вернёт true
+		// Обход массива прекратится и вся функция
+		// hasInvalidInput вернёт true
+		return !inputElement.validity.valid;
+  })
+};
+
+// Функция принимает массив полей ввода
+// и элемент кнопки, состояние которой нужно менять
+function toggleButtonState(inputList, buttonElement) {
+	// Если есть хотя бы один невалидный инпут
+	if (hasInvalidInput(inputList)) {
+	// сделай кнопку неактивной
+    buttonElement.classList.add('popup__save-button_disabled');
+  } else {
+	// иначе сделай кнопку активной
+    buttonElement.classList.remove('popup__save-button_disabled');
+  }
+};
+
+// Ф. валидация
+function checkInputValidity(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+		// showInputError теперь получает параметром форму, в которой
+		// находится проверяемое поле, и само это поле
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+		// hideInputError теперь получает параметром форму, в которой
+		// находится проверяемое поле, и само это поле
+    hideInputError(formElement, inputElement);
+  }
+};
+
+// Сбрасываются ошибки при открытии popup
+// !!! Придумать что-то с формой добавления картинок - в ней сохраняется текст при _закрытии_ popup, но ошибки я убираю
+function resetValidateEror(formElement) {
+  // Этот же список инпутов дальше достается другим способом. Не придумал как его можно передать оттуда.
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+	const buttonElement = formElement.querySelector('.popup__save-button');
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement);
+  });
+}
+
+// Ф. слушатель событий для полей формы.
+// Получает параметром элемент формы и добавляет её полям нужные обработчики
+function setEventListeners(formElement) {
+  // Получаем массив элементов формы - инпуты, и убираем тэг button
+  const inputList = Array.from(formElement).filter(function (i) {
+    return i.tagName !== 'BUTTON'
+  });
+
+  // Получаем кнопку отправки в текущей форме
+	const buttonElement = formElement.querySelector('.popup__save-button');
+	// Вызовем toggleButtonState, чтобы не ждать ввода данных в поля
+	toggleButtonState(inputList, buttonElement);
+
+  // Перебирает Инпуты формы и вешает на каждый из них обработчик (слушатель)
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      // Валидация полей
+      checkInputValidity(formElement, inputElement);
+
+      // Вызовем toggleButtonState и передадим ей массив полей и кнопку
+			toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+// Ф. Подключает валидацию для форм
+function enableValidation() {
+  // Найдём все формы с указанным классом в DOM,
+	// сделаем из них массив методом Array.from
+	const formList = Array.from(document.querySelectorAll('.popup__form'));
+
+	// Переберем полученную коллекцию
+	formList.forEach((formElement) => {
+		// Для каждой формы вызовем функцию setEventListeners,
+		// передав ей элемент формы
+		setEventListeners(formElement);
+	});
+}
+
+// Вызовем функцию
+enableValidation();
+
+
+
+/**********************************************************************************
+ * Черновики. Удалить
+ */
+
+// Ф. Закрытия popup при клике на оверлей
+/* // Вариант 1. Работает на блоке popup__container
+popupContainerList.forEach(container => {
+  const popup = container.closest('.popup');
+  //console.log(overlay);
+  popup.addEventListener('click', (evt) => {
+    //console.log(evt.target);
+    //console.log(evt.currentTarget);
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+})*/
+
+
+// Ф. Закрытия popup при нажатии кнопки Escape на клавиатуре
+// Вариант 1. Работает если Esc нажимается когда активно поле input
+/*popupList.forEach(container => {
+  container.addEventListener('keydown', function(evt) {
+    //console.log(evt);
+    //console.log(evt.target);
+    //console.log(evt.key);
+    //console.log(evt.currentTarget);
+    if (evt.key === 'Escape') {
+      //console.log(evt.key);
+      closePopup(container);
+    }
+  });
+})*/
+// Вариант 2. Работает всегда, Esc закрывает оверлей если он есть открыт
+// Слушает окно
+/*window.addEventListener('keydown', function (evt) {
+  // Перебирает все popup страницы
+  popupList.forEach(overlay => {
+    // Если есть открытый popup по нажатию Esc он закрывается
+    if (evt.key === 'Escape' && overlay.classList.contains('popup_opened')) {
+      //console.log(evt.key);
+      //console.log(overlay.classList.contains('popup_opened'));
+      closePopup(overlay);
+    }
+  });
+});*/
+
+// Ф. Закрывает popup при нажатии кнопки Escape на клавиатуре
+// Вариант 3. Работает. Вызывается при открытии popup.
+// Так объявил функцию просто так, для практики.
+// Знаю, что это в требование единообразия кода не вписывается.
+/*const addEventListenerForEsc = (popup) => {
+  // Слушает окно браузера и закрывает popup если нажат Esc
+  // Другие варианты см. в конце файла
+  window.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+  });
+}*/

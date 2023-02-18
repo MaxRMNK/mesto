@@ -51,9 +51,27 @@
     <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
-      <form action="#" class="popup__form" name="editProfileForm"><!-- Надеюсь такой action будет правильным -->
-        <input type="text" class="popup__input popup__input_type_name" name="editName" placeholder="Имя" required>
-        <input type="text" class="popup__input popup__input_type_job" name="editJob" placeholder="Профессия" required>
+      <form action="#" class="popup__form" name="editProfileForm" novalidate>
+        <input
+          type="text"
+          class="popup__input popup__input_type_name"
+          id="input-name"
+          name="editName"
+          placeholder="Имя"
+          minlength="2"
+          maxlength="40"
+          required>
+        <span class="popup__input-error input-name-error"></span>
+        <input
+          type="text"
+          class="popup__input popup__input_type_job"
+          id="input-job"
+          name="editJob"
+          placeholder="Профессия"
+          minlength="2"
+          maxlength="200"
+          required>
+        <span class="popup__input-error input-job-error"></span>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -64,9 +82,25 @@
     <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Новое место</h3>
-      <form action="#" class="popup__form" name="addCardForm"><!-- addCardForm, чтобы отличался в JS -->
-        <input type="text" class="popup__input popup__input_type_add-title" name="addCardTitle" placeholder="Название" required>
-        <input type="text" class="popup__input popup__input_type_add-link" name="addCardLink" placeholder="Ссылка на картинку" required>
+      <form action="#" class="popup__form popup__form-add-card" name="addCardForm">
+        <input
+          type="text"
+          class="popup__input popup__input_type_add-title"
+          id="input-add-title"
+          name="addCardTitle"
+          placeholder="Название"
+          minlength="2"
+          maxlength="30"
+          required>
+        <span class="popup__input-error input-add-title-error"></span>
+        <input
+          type="url"
+          class="popup__input popup__input_type_add-link"
+          id="input_add-link"
+          name="addCardLink"
+          placeholder="Ссылка на картинку"
+          required>
+        <span class="popup__input-error input_add-link-error"></span>
         <button class="popup__save-button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -94,19 +128,6 @@
       <button class="element__delete" type="button" aria-label="Удалить"></button>
     </article>
   </template>
-
-  <!-- template для popup картинки -->
-  <!--template id="popup_image">
-    <div class="popup popup_image">
-      <div class="popup__container popup__container_image">
-        <button class="popup__close-button popup__close-button_image" type="button" aria-label="Закрыть"></button>
-        <figure class="popup__illustration">
-          <img class="popup__large-image">
-          <figcaption class="popup__caption-image"></figcaption>
-        </figure>
-      </div>
-    </div>
-  </template-->
 
   <script src="./script/cards.js"></script>
   <script src="./script/index.js"></script>
