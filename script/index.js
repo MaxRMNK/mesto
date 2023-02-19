@@ -107,7 +107,7 @@ buttonEditProfile.addEventListener('click', function () {
   inputJobProfile.value = jobProfile.textContent;
 
   // Сброс ошибок при открытии popup
-  resetValidateEror(formEditProfile);
+  resetValidateEror(formEditProfile, formValidationConfig);
   // Подрядок важен! Сначала заполняем поля, потом открываем popup
   // До того как поменял их местами не сбрасывались ошибки заполнения формы - resetValidateEror
   openPopup(popupEditProfile);
@@ -140,10 +140,13 @@ function handleFormSubmitCard(evt) {
 }
 
 // Открывает попап добавления картинки
-buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
-// Здесь не стал делать "Сброс ошибок при открытии popup" - resetValidateEror(formAddCard);
-// т.к. без него поведение формы логичнее.
-// При необходимости - добавить перед "openPopup".
+buttonAddCard.addEventListener('click', function () {
+  // Если убрать "Сброс ошибок при открытии popup" - resetValidateEror(formAddCard);
+  // поведение формы будет логичнее. Но ревьюер настоял чтобы было.
+  // Класс "popup__save-button_disabled" и атрибут "disabled" добавлялся кнопке и без сброса.
+  resetValidateEror(formAddCard, formValidationConfig);
+  openPopup(popupAddCard)
+});
 
 // Отслеживает событие 'клик по кнопке закрыть' у формы Добавить карточку
 /*buttonCloseAddCard.addEventListener('click', () => {
