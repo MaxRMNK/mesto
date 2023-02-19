@@ -36,7 +36,7 @@ function hideInputError(formElement, inputElement, config) {
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Функция принимает массив полей
-const hasInvalidInput = (inputList, config) => { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const hasInvalidInput = (inputList) => { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// проходим по этому массиву методом some
 	return inputList.some((inputElement) => {
 		// Если поле не валидно, колбэк вернёт true
@@ -50,7 +50,7 @@ const hasInvalidInput = (inputList, config) => { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // и элемент кнопки, состояние которой нужно менять
 function toggleButtonState(inputList, buttonElement, config) {
 	// Если есть хотя бы один невалидный инпут
-	if (hasInvalidInput(inputList, config)) {
+	if (hasInvalidInput(inputList)) {
 	  // сделай кнопку неактивной
     buttonElement.classList.add(config.inactiveButtonClass);
     buttonElement.setAttribute('disabled', true);
