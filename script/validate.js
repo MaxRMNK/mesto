@@ -129,3 +129,4 @@ function enableValidation(config) {
 
 // Вызовем функцию
 enableValidation(formValidationConfig);
+
