@@ -17,8 +17,6 @@ const formValidationConfig = {
 function showInputError(formElement, inputElement, errorMessage, config) {
   // Находим элемент ошибки внутри самой функции
 	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	// Остальной код такой же
-
 	inputElement.classList.add(config.inputErrorClass);
 	//errorElement.classList.add('form__input-error_active');
 	errorElement.textContent = errorMessage;
@@ -28,7 +26,6 @@ function showInputError(formElement, inputElement, errorMessage, config) {
 function hideInputError(formElement, inputElement, config) {
 	// Находим элемент ошибки
 	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	// Остальной код такой же
 	inputElement.classList.remove(config.inputErrorClass);
 	//errorElement.classList.remove('form__input-error_active');
 	errorElement.textContent = '';
@@ -39,9 +36,8 @@ function hideInputError(formElement, inputElement, config) {
 const hasInvalidInput = (inputList) => { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// проходим по этому массиву методом some
 	return inputList.some((inputElement) => {
-		// Если поле не валидно, колбэк вернёт true
-		// Обход массива прекратится и вся функция
-		// hasInvalidInput вернёт true
+		// Если хотя бы одно поле массива не валидно, колбэк вернёт true
+		// Обход массива прекратится и вся функция hasInvalidInput вернёт true
 		return !inputElement.validity.valid;
   })
 };
@@ -77,6 +73,11 @@ function checkInputValidity(formElement, inputElement, config) {
 // Сбрасываются ошибки при открытии popup
 // !!! Придумать что-то с формой добавления картинок - в ней сохраняется текст при _закрытии_ popup, но ошибки я убираю
 function resetValidateEror(formElement, config) {
+  // Если при вызове не был передан второй параметр, то берется
+  // значение по-умолчанию - из Объекта конфигурации в начале файла.
+  // Переделал после сдачи ПР6. (Учебник: Спринт 5, Тема 5/12; Дока: "Функции" )
+  if (config === undefined) config = formValidationConfig;
+
   // Этот же список инпутов дальше достается другим способом. Не придумал как его можно передать оттуда.
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
 	const buttonElement = formElement.querySelector(config.submitButtonSelector);

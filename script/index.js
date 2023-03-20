@@ -106,10 +106,12 @@ buttonEditProfile.addEventListener('click', function () {
   inputNameProfile.value = nameProfile.textContent;
   inputJobProfile.value = jobProfile.textContent;
 
-  // Сброс ошибок при открытии popup
-  resetValidateEror(formEditProfile, formValidationConfig);
   // Подрядок важен! Сначала заполняем поля, потом открываем popup
   // До того как поменял их местами не сбрасывались ошибки заполнения формы - resetValidateEror
+  // Сброс ошибок при открытии popup
+  resetValidateEror(formEditProfile);
+  // Убрал из вызова второй параметр и добавил его в саму функцию resetValidateEror.
+  // resetValidateEror(formEditProfile, formValidationConfig);
   openPopup(popupEditProfile);
 });
 
@@ -141,10 +143,15 @@ function handleFormSubmitCard(evt) {
 
 // Открывает попап добавления картинки
 buttonAddCard.addEventListener('click', function () {
-  // Если убрать "Сброс ошибок при открытии popup" - resetValidateEror(formAddCard);
-  // поведение формы будет логичнее. Но ревьюер настоял чтобы было.
-  // Класс "popup__save-button_disabled" и атрибут "disabled" добавлялся кнопке и без сброса.
-  resetValidateEror(formAddCard, formValidationConfig);
+  // Сброс ошибок при открытии popup
+  // Если убрать resetValidateEror поведение формы будет логичнее. Но ревьюер настоял чтобы было.
+  // Класс "popup__button_disabled" и атрибут "disabled" добавлялся кнопке и без сброса.
+  //
+  // UPD. Коммент от ревьюера: Кнопка была неактивна только при первом открытии,
+  // после первого сабмита, при следующем открытии кнопка становится активной, скрин
+  resetValidateEror(formAddCard);
+  // Убрал из вызова второй параметр и добавил его в саму функцию resetValidateEror.
+  // resetValidateEror(formEditProfile, formValidationConfig);
   openPopup(popupAddCard)
 });
 
