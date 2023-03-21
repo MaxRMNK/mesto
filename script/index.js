@@ -1,27 +1,7 @@
-/**********************************************************************************
- * Работа с классами
- */
-
 
 import initialCards from './cards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-
-
-
-
-
-
-
-
-
-
-
-
-/**********************************************************************************
- * Старый код
- */
-
 
 const page = document.querySelector('.page');
 const nameProfile = page.querySelector('.profile__name');
