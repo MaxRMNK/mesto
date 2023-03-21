@@ -83,9 +83,9 @@ function openPopup(popupElement) {
 
 // Popup картинок ---
 // Заменяет Картинку и Описание в popup картинки, открытвает popup.
-// Вместо экспорта функции можно передать ее параметром
-// к "new Card(...)" или "card.generateCard()". См.сохранения ПР7.
-export function showImage(ImageLink, imageName) {
+// Вариант 1. Передача функции параметром к классу.
+// Вернуться к этому варианту рекомендовал ревьюер. см конспект ПР7.
+function handleCardClick(ImageLink, imageName) {
   ImageToView.src = ImageLink;
   ImageToView.alt = imageName;
   imageCaption.textContent = imageName;
@@ -93,11 +93,22 @@ export function showImage(ImageLink, imageName) {
   openPopup(popupLargeImage);
 }
 
+// // Заменяет Картинку и Описание в popup картинки, открытвает popup.
+// // Вариант 2. Экпорт-импорт функции
+// export function showImage(ImageLink, imageName) {
+//   ImageToView.src = ImageLink;
+//   ImageToView.alt = imageName;
+//   imageCaption.textContent = imageName;
+
+//   openPopup(popupLargeImage);
+// }
+
+
 // Добавление карточек и реакций к ним ---
 // Обходит массив с данными и создает карточки
 function addCards(items) {
   items.forEach (item => {
-    const card = new Card(item, '#element');
+    const card = new Card(item, '#element', handleCardClick);
     cardsContainer.prepend(card.generateCard());
   });
 }
