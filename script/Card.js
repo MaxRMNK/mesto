@@ -12,7 +12,7 @@ class Card {
   _getTemplate() {
     return document.querySelector(this._template)
         .content
-        .children[0] // по вебинарам "ООП на практике",
+        .children[0] // по вебинарам "ООП на практике", ПР7
         .cloneNode(true);
   }
 
@@ -25,7 +25,7 @@ class Card {
   }
 
   _addEventListeners() {
-    // Стрелочная функция не лучший вариант
+    // Стрелочная функция не лучший вариант, см. самую первую (не правильную версию ПР7 + файл "Примеры с this и addEventListener")
     this._element.querySelector('.element__delete').addEventListener('click', () => { this._deleteCard(); });
     this._element.querySelector('.element__like').addEventListener('click', () => { this._likeCard(); });
     this._elementImage.addEventListener('click', () => { showImage(this._imageLink, this._imageName); });

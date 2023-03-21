@@ -9,6 +9,7 @@
   <!-- Пришлось сделать т.к. в консоли FF все время показывалась ошибка, что фавиконки нет -->
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <title>Mesto</title>
+  <script type="module" src="./script/index.js" defer></script>
 </head>
 
 <body class="page">
@@ -51,7 +52,7 @@
     <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <h3 class="popup__header">Редактировать профиль</h3>
-      <form action="#" class="popup__form" name="editProfileForm" novalidate>
+      <form action="#" class="popup__form popup__form_edit-profile" name="editProfileForm" novalidate>
         <input
           type="text"
           class="popup__input popup__input_type_name"
@@ -133,9 +134,9 @@
     </article>
   </template>
 
-  <script src="./script/cards.js"></script>
+  <!--script src="./script/cards.js"></script>
   <script src="./script/index.js"></script>
-  <script src="./script/validate.js"></script>
+  <script src="./script/validate.js"></script-->
 </body>
 
 </html>

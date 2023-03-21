@@ -29,8 +29,8 @@ const jobProfile = page.querySelector('.profile__job');
 const buttonEditProfile = page.querySelector('.profile__edit-button'); // Кнопка Редактирования профиля
 const buttonAddCard = page.querySelector('.profile__add-button'); // Кнопка Добавления Картинки
 
-// Выбирает template для createCard()
-const elementTemplate = page.querySelector('#element').content;
+// // Выбирает template для createCard()
+// const elementTemplate = page.querySelector('#element').content;
 // Выбирает элемент, в который нужно добавлять карточки addCards()
 const cardsContainer = page.querySelector('.elements');
 
@@ -58,7 +58,6 @@ const imageCaption = popupLargeImage.querySelector('.popup__caption-image');
 
 
 // Общие функции ----------------------------------------
-
 
 // Ф. Закрывает popup при нажатии кнопки Escape на клавиатуре
 // Вариант 4?
@@ -102,9 +101,8 @@ function openPopup(popupElement) {
 }
 
 
-// Popup картинок -------------------------------------------
-
-// Заменяет Картинку и Описание в popup картинки и открывает его.
+// Popup картинок ---
+// Заменяет Картинку и Описание в popup картинки, открытвает popup.
 // Вместо экспорта функции можно передать ее параметром
 // к "new Card(...)" или "card.generateCard()". См.сохранения ПР7.
 export function showImage(ImageLink, imageName) {
@@ -115,25 +113,22 @@ export function showImage(ImageLink, imageName) {
   openPopup(popupLargeImage);
 }
 
-// // Ф. добавления и удаления popup картинки
-// // Вариант 2
-// // При клике по картинке берется заготовка popup и в ней меняются ссылка и описание картинки
-// function showImage(event) {
-//   // Заменяет значения ссылки и описания
-//   ImageToView.src = event.target.src;
-//   ImageToView.alt = event.target.alt;
-//   imageCaption.textContent = event.target.alt;
-
-//   // Открывает попап с картинкой
-//   openPopup(popupLargeImage);
-// }
+// Добавление карточек и реакций к ним ---
+// Обходит массив с данными и создает карточки
+function addCards(items) {
+  items.forEach (item => {
+    const card = new Card(item, '#element');
+    cardsContainer.prepend(card.generateCard());
+  });
+}
+addCards(initialCards);
 
 
-// Форма Редактирование профиля ------------------------------------
 
+// Форма Редактирование профиля ---
 // Ф. отправки/сохранения формы Редактирование профиля
 function handleFormSubmitProfile(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+  evt.preventDefault(); // Отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
   nameProfile.textContent = inputNameProfile.value;
   jobProfile.textContent = inputJobProfile.value;
   closePopup(popupEditProfile);
@@ -145,13 +140,8 @@ buttonEditProfile.addEventListener('click', function () {
   // Подставляет в поля формы текущие значения из текста страницы
   inputNameProfile.value = nameProfile.textContent;
   inputJobProfile.value = jobProfile.textContent;
-
-  // Подрядок важен! Сначала заполняем поля, потом открываем popup
-  // До того как поменял их местами не сбрасывались ошибки заполнения формы - resetValidateEror
   // Сброс ошибок при открытии popup
-  resetValidateEror(formEditProfile);
-  // Убрал из вызова второй параметр и добавил его в саму функцию resetValidateEror.
-  // resetValidateEror(formEditProfile, formValidationConfig);
+  formValidationEditProfile.resetValidateEror();
   openPopup(popupEditProfile);
 });
 
@@ -159,11 +149,12 @@ buttonEditProfile.addEventListener('click', function () {
 formEditProfile.addEventListener('submit', handleFormSubmitProfile);
 
 
-// Форма Добавление карточек -------------------------------------
 
+
+// Форма Добавление карточек ---
 // Ф. отправки/сохранения формы Добавления карточки
 function handleFormSubmitCard(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+  evt.preventDefault(); // Отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
   const item = [
     {
       name: inputImageTitle.value,
@@ -171,7 +162,7 @@ function handleFormSubmitCard(evt) {
     }
   ];
   addCards(item);
-  // Строка reset() очищает поля при отправке формы.
+  // Строка ...reset() очищает поля при отправке формы.
   // При закрытии popup (нажанием на крестик) введенные данные сохранятся.
   evt.target.reset();
   closePopup(popupAddCard);
@@ -180,9 +171,7 @@ function handleFormSubmitCard(evt) {
 // Открывает попап добавления картинки
 buttonAddCard.addEventListener('click', function () {
   // Сброс ошибок при открытии popup
-  resetValidateEror(formAddCard);
-  // Убрал из вызова второй параметр и добавил его в саму функцию resetValidateEror.
-  // resetValidateEror(formEditProfile, formValidationConfig);
+  formValidationAddCard.resetValidateEror();
   openPopup(popupAddCard)
 });
 
@@ -190,20 +179,22 @@ buttonAddCard.addEventListener('click', function () {
 formAddCard.addEventListener('submit', handleFormSubmitCard);
 
 
-
 // FormValidator ---------------------------------
 
+const formValidationConfig = {
+  //formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};
+
+const formValidationEditProfile = new FormValidator(formValidationConfig, formEditProfile);
+const formValidationAddCard = new FormValidator(formValidationConfig, formAddCard);
+
+formValidationEditProfile.enableValidation();
+formValidationAddCard.enableValidation();
 
 
 
-// Добавление карточек и реакций к ним ---------------------------------
-
-// Обходит массив с данными и создает карточки
-function addCards(items) {
-  items.forEach (item => {
-    const card = new Card(item, '#element');
-    cardsContainer.prepend(card.generateCard());
-  });
-}
-
-addCards(initialCards);
