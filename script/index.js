@@ -105,11 +105,17 @@ function handleCardClick(ImageLink, imageName) {
 
 
 // Добавление карточек и реакций к ним ---
-// Обходит массив с данными и создает карточки
+// Ф. Создание карточки
+function createCard(item) {
+  const card = new Card(item, '#element', handleCardClick);
+  const cardElement = card.generateCard();
+  return cardElement
+}
+
+// Обходит массив с данными и добавляет готовые карточки на страницу
 function addCards(items) {
   items.forEach (item => {
-    const card = new Card(item, '#element', handleCardClick);
-    cardsContainer.prepend(card.generateCard());
+    cardsContainer.prepend(createCard(item));
   });
 }
 addCards(initialCards);
