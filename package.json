@@ -1,0 +1,11 @@
+{
+  "name": "mesto_yandex_praktikum",
+  "version": "0.0.1",
+  "description": "[Ссылка на Gihub Pages](https://maxrmnk.github.io/mesto/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MaxRMNK",
+  "license": "ISC"
+}
