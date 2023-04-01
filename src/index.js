@@ -1,13 +1,15 @@
 
-import initialCards from './cards.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import './pages/index.css';
 
-import UserInfo from './UserInfo.js';
-import Section from './Section.js';
-//import Popup from './Popup.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
+import initialCards from './script/cards.js';
+import Card from './script/Card.js';
+import FormValidator from './script/FormValidator.js';
+
+import UserInfo from './script/UserInfo.js';
+import Section from './script/Section.js';
+//import Popup from './script/Popup.js';
+import PopupWithImage from './script/PopupWithImage.js';
+import PopupWithForm from './script/PopupWithForm.js';
 
 const page = document.querySelector('.page');
 
