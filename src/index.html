@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--link rel="stylesheet" href="./pages/index.css"-->
   <!-- Пришлось сделать т.к. в консоли FF все время показывалась ошибка, что фавиконки нет -->
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"><!-- ./ -->
+  <link rel="icon" type="image/png" sizes="32x32" href="<%=require('./images/favicon-32x32.png')%>"><!-- ./ -->
   <title>Mesto</title>
   <!--script type="module" src="./script/index.js" defer></script-->
 </head>
@@ -20,7 +20,7 @@
 
   <main class="content">
     <section class="profile">
-      <img src="./images/cousteau.jpg" class="profile__avatar" alt="Аватар пользователя"><!-- ./ -->
+      <img src="<%=require('./images/cousteau.jpg')%>" class="profile__avatar" alt="Аватар пользователя"><!-- ./ -->
       <div class="profile__info">
         <div class="profile__text">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
