@@ -1,11 +1,24 @@
 class FormValidator {
   constructor(data, form) {
-    this._form = form; // В validate.js называлась formElement
     this._inputSelector = data.inputSelector;
     this._submitButtonSelector = data.submitButtonSelector;
     this._inactiveButtonClass = data.inactiveButtonClass;
     this._inputErrorClass = data.inputErrorClass;
-    this._errorClass = data.errorClass;
+    //this._errorClass = data.errorClass;
+    this._form = form; // В validate.js называлась formElement
+
+    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector)); // this._form <= formElement
+    this._buttonElement = this._form.querySelector(this._submitButtonSelector); // this._form <= formElement
+    // ПР8, коммент ревьюера:
+    // Правильнее будет вынести поиск элементов формы в конструктор.
+    // Почему?
+    // У вас есть методы в классе, которые являются публичными и их вызов никак
+    // не зависит от выполнения _setEventListeners(), например, resetValidateEror().
+    // Т.е. они могут быть вызваны до установки слушателей, соответственно,
+    // чтобы их вызов не привел к ошибке нужно чтобы поля класса с массивом инпутов
+    // и кнопкой уже были определены. Лучше сделать это в конструкторе, тогда вы уходите
+    // от зависимости всегда отслеживать запуск установки слушателей раньше выполнения других методов.
+    // Старайтесь при проектировании класса всегда обращать внимание на такие детали. Это повысит качество кода.
   }
 
   // Функция, которая добавляет классы с ошибкой
@@ -13,7 +26,7 @@ class FormValidator {
     // Находим элемент ошибки внутри самой функции
     this._errorElement = this._form.querySelector(`.${inputElement.id}-error`); // this._form <= formElement
     inputElement.classList.add(this._inputErrorClass);
-    this._errorElement.classList.add(this._errorClass); // ХЗ нужен ли. Он ничего не меняет.
+    // this._errorElement.classList.add(this._errorClass); // ХЗ нужен ли. Он ничего не меняет.
     this._errorElement.textContent = errorMessage;
     // console.log(inputElement);
     // console.log(errorMessage);
@@ -40,8 +53,11 @@ class FormValidator {
   // Функция принимает массив полей ввода
   // и элемент кнопки, состояние которой нужно менять
   _toggleButtonState() {
-    // Если есть хотя бы один невалидный инпут
-    if (this._hasInvalidInput(this._inputList)) {
+    // Если есть хотя бы один невалидный инпут.
+    // БЫЛО: if (this._hasInvalidInput(this._inputList)) { ...
+      // Передавать в параметрах поля класса не нужно. Они доступны во всех методах класса - ПР8
+    // СТАЛО:
+    if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
       this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.setAttribute('disabled', true);
@@ -62,9 +78,6 @@ class FormValidator {
   };
 
   _setEventListeners() {
-    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector)); // this._form <= formElement
-    this._buttonElement = this._form.querySelector(this._submitButtonSelector); // this._form <= formElement
-
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
@@ -93,7 +106,6 @@ class FormValidator {
 
     // //console.log(this._popup);
     // this._openPopupForm();
-
 
     // this._fieldName = document.querySelector(this._fieldNameSelector);
     // this._fieldJob = document.querySelector(this._fieldJobSelector);

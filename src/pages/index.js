@@ -1,15 +1,15 @@
 
-import './pages/index.css';
+import './index.css';
 
-import initialCards from './script/cards.js';
-import Card from './script/Card.js';
-import FormValidator from './script/FormValidator.js';
+import initialCards from '../utils/cards.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
 
-import UserInfo from './script/UserInfo.js';
-import Section from './script/Section.js';
-//import Popup from './script/Popup.js';
-import PopupWithImage from './script/PopupWithImage.js';
-import PopupWithForm from './script/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
+//import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 const page = document.querySelector('.page');
 
@@ -32,7 +32,7 @@ const formValidationConfig = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
+  //errorClass: 'popup__error_visible',
 };
 
 
@@ -49,15 +49,34 @@ function handleCardClick(data) {
   popupImage.open(data);
 }
 
-// Ф. Создает и добавляет карточку на страницу
+// // Ф. Создает и добавляет карточку на страницу
+// function createCard(cardData) { // cardData приходит из section.renderItems
+//   const card = new Card({cardData, handleCardClick}, '#element');
+//   const cardElement = card.generateCard();
+//   section.addItem(cardElement);
+// }
+
+// !!! Надеюсь я правильно понял, что нужно было исправить.
+// P.S. Сергей Криворучко, я Вас помню! Вы проверяли мою ПР5.
+// Спасибо за большое количество замечаний и подробные комментарии!
+
+// Ф. Создает карточку на страницу
 function createCard(cardData) { // cardData приходит из section.renderItems
   const card = new Card({cardData, handleCardClick}, '#element');
-  const cardElement = card.generateCard();
-  section.addItem(cardElement);
+  return card.generateCard();
 }
 
-const section = new Section ({ data: initialCards, renderer: createCard }, '.elements');
-section.renderItems();
+// Ф. Добавляет карточку на страницу
+function addCard(cardData) { // cardData приходит из section.renderItems
+  section.addItem( createCard(cardData) );
+}
+
+// По ПР8
+// const section = new Section ({ data: initialCards, renderer: createCard }, '.elements');
+// section.renderItems();
+// По рекомендации ревьюера ПР8:
+const section = new Section (addCard, '.elements');
+section.renderItems(initialCards);
 
 
 
@@ -66,6 +85,9 @@ section.renderItems();
 // Форма Редактирование профиля ---
 const userInfo = new UserInfo({name: '.profile__name', info: '.profile__job'});
 const popupFormEditProfile = new PopupWithForm('.popup_edit-profile', handleFormSubmitProfile);
+// Добавляет валидацию
+const formValidationEditProfile = new FormValidator(formValidationConfig, formEditProfile);
+formValidationEditProfile.enableValidation();
 
 // Ф. отправки/сохранения формы Редактирование профиля
 function handleFormSubmitProfile(inputData) {
@@ -80,23 +102,24 @@ buttonEditProfile.addEventListener('click', function () {
   inputNameProfile.value = name;
   inputJobProfile.value = info;
 
+  // Сброс ошибок при открытии popup
+  formValidationEditProfile.resetValidateEror();
+
   popupFormEditProfile.open();
 });
 
 // Добавляет слушатели событий формы
 popupFormEditProfile.setEventListeners();
 
-// Добавляет валидацию при открытии popup
-const formValidationEditProfile = new FormValidator(formValidationConfig, formEditProfile);
-formValidationEditProfile.enableValidation();
-// Сброс ошибок при открытии popup
-formValidationEditProfile.resetValidateEror();
 
 
 
 // --------------------------------------------------------------------------------------
 // Форма Добавление карточек ---
 const popupFormAddCard = new PopupWithForm('.popup_add-card', handleFormSubmitCard);
+// Добавляет валидацию
+const formValidationAddCard = new FormValidator(formValidationConfig, formAddCard);
+formValidationAddCard.enableValidation();
 
 // Ф. отправки/сохранения формы Добавления карточки
 function handleFormSubmitCard(inputData) {
@@ -104,19 +127,20 @@ function handleFormSubmitCard(inputData) {
     name: inputData.addCardTitle,
     link: inputData.addCardLink
   };
-  createCard(itemData);
+  // createCard(itemData);
+  addCard(itemData);
 }
 
 // Открывает попап добавления картинки
-buttonAddCard.addEventListener('click', () => { popupFormAddCard.open() });
+buttonAddCard.addEventListener('click', () => {
+  // Сброс ошибок при открытии popup
+  formValidationAddCard.resetValidateEror();
+
+  popupFormAddCard.open()
+});
 // Добавляет слушатели событий формы
 popupFormAddCard.setEventListeners();
 
-// Добавляет валидацию при открытии popup
-const formValidationAddCard = new FormValidator(formValidationConfig, formAddCard);
-formValidationAddCard.enableValidation();
-// Сброс ошибок при открытии popup
-formValidationAddCard.resetValidateEror();
 
 
 

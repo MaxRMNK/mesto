@@ -1,7 +1,8 @@
 class Card {
   constructor({cardData, handleCardClick}, templateSelector) {
-    this._imageLink = cardData.link;
-    this._imageName = cardData.name;
+    // this._imageLink = cardData.link;
+    // this._imageName = cardData.name;
+    this._cardData = cardData;
     this._template = templateSelector;
     this._handleCardClickFn = handleCardClick; // Рекомендация ревьюера. см конспект ПР7.
   }
@@ -15,6 +16,7 @@ class Card {
 
   _deleteCard() {
     this._element.remove();
+    this._element = null;
   }
 
   _likeCard() {
@@ -28,7 +30,7 @@ class Card {
     this._element.querySelector('.element__delete').addEventListener('click', () => { this._deleteCard(); });
     this._elementLike.addEventListener('click', () => { this._likeCard(); });
     // Вариант 1. вызов функции полученной в конструктор
-    this._elementImage.addEventListener('click', () => { this._handleCardClickFn({link: this._imageLink, name: this._imageName}); });
+    this._elementImage.addEventListener('click', () => { this._handleCardClickFn(this._cardData); });
   }
 
   generateCard() { // Раньше называлось createCard()
@@ -38,9 +40,9 @@ class Card {
 
     this._addEventListeners();
 
-	  this._elementImage.src = this._imageLink;
-    this._elementImage.alt = this._imageName;
-	  this._elementHeader.textContent = this._imageName;
+	  this._elementImage.src = this._cardData.link;
+    this._elementImage.alt = this._cardData.name;
+	  this._elementHeader.textContent = this._cardData.name;
 
   	return this._element;
   }
