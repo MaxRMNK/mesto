@@ -26,10 +26,7 @@ class FormValidator {
     // Находим элемент ошибки внутри самой функции
     this._errorElement = this._form.querySelector(`.${inputElement.id}-error`); // this._form <= formElement
     inputElement.classList.add(this._inputErrorClass);
-    // this._errorElement.classList.add(this._errorClass); // ХЗ нужен ли. Он ничего не меняет.
     this._errorElement.textContent = errorMessage;
-    // console.log(inputElement);
-    // console.log(errorMessage);
   };
 
   // Функция, которая удаляет классы с ошибкой
@@ -37,7 +34,6 @@ class FormValidator {
     // Находим элемент ошибки
     this._errorElement = this._form.querySelector(`.${inputElement.id}-error`); // this._form <= formElement
     inputElement.classList.remove(this._inputErrorClass);
-    this._errorElement.classList.remove(this._errorClass); // ХЗ нужен ли. Он ничего не меняет.
     this._errorElement.textContent = '';
   };
 
@@ -66,6 +62,28 @@ class FormValidator {
       this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.removeAttribute('disabled');
     }
+
+    // // Можно упростить. Соверты Ревьюера, ПР8:
+    // // Вариант 1:
+    // // Можно совсем удалить метод _hasInvalidInput, т.к. у формы есть метод checkValidity()
+    // // который возвращает true, если вся форма валидна и false если наоборот.
+    // if (this._form.checkValidity()) {
+    //   // сделай кнопку активной
+    //   this._buttonElement.classList.remove(this._inactiveButtonClass);
+    //   this._buttonElement.removeAttribute('disabled');
+    // } else {
+    //   // иначе сделай кнопку неактивной
+    //   this._buttonElement.classList.add(this._inactiveButtonClass);
+    //   this._buttonElement.setAttribute('disabled', true);
+    // }
+
+    // // Вариант 2:
+    // // СЕЙЧАС НЕ РАБОТАЕТ!
+    // // Можно еще больше упростить код. (Только сначала нужно в нем разобраться!)
+    // const isFormInvalid = this._form.checkValidity();
+    // this._buttonElement.classList.toggle(this._inactiveButtonClass, isFormInvalid);
+    // this._buttonElement.disabled = isFormInvalid;
+
   };
 
   // Ф. валидация

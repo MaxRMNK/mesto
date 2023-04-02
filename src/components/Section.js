@@ -6,10 +6,14 @@ export default class Section {
   }
 
   renderItems(data) { // отвечает за отрисовку всех элементов в Section
-    // Сделал const потому что "data" кроме как здесь больше ни где не используется, см. замечания к PopupWithForm.js в ПР8
-    const dataItems = data;
-    // console.log(dataItems);
-    dataItems.forEach (item => this._rendererFn(item));
+    // В коротких строках можно убрать создание лишних переменных: коммент ревьюера, ПР8
+    data.forEach (item => this._rendererFn(item));
+
+    // // Это то же самое, что выше:
+    // // Сделал const потому что "data" кроме как здесь больше ни где не используется,
+    // // см. замечания к PopupWithForm.js в ПР8
+    // const dataItems = data;
+    // dataItems.forEach (item => this._rendererFn(item));
   }
 
   addItem(element) { // Добавляет карточку на страницу

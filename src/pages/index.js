@@ -56,11 +56,7 @@ function handleCardClick(data) {
 //   section.addItem(cardElement);
 // }
 
-// !!! Надеюсь я правильно понял, что нужно было исправить.
-// P.S. Сергей Криворучко, я Вас помню! Вы проверяли мою ПР5.
-// Спасибо за большое количество замечаний и подробные комментарии!
-
-// Ф. Создает карточку на страницу
+// Ф. Создает карточку
 function createCard(cardData) { // cardData приходит из section.renderItems
   const card = new Card({cardData, handleCardClick}, '#element');
   return card.generateCard();
@@ -103,6 +99,8 @@ buttonEditProfile.addEventListener('click', function () {
   inputJobProfile.value = info;
 
   // Сброс ошибок при открытии popup
+  // Важно запускать валидацию именно при открытии popup, чтобы
+  // кнопка сохранения была всегда в корректном состоянии.
   formValidationEditProfile.resetValidateEror();
 
   popupFormEditProfile.open();
@@ -134,6 +132,8 @@ function handleFormSubmitCard(inputData) {
 // Открывает попап добавления картинки
 buttonAddCard.addEventListener('click', () => {
   // Сброс ошибок при открытии popup
+  // Важно запускать валидацию именно при открытии popup, чтобы
+  // кнопка сохранения была всегда в корректном состоянии.
   formValidationAddCard.resetValidateEror();
 
   popupFormAddCard.open()
