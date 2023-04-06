@@ -35,7 +35,16 @@ const formValidationConfig = {
   //errorClass: 'popup__error_visible',
 };
 
-
+// Для ПР9
+// fetch('https://mesto.nomoreparties.co/v1/cohort-62/cards', {
+//   headers: {
+//     authorization: 'fe0e2550-7db8-46d0-ad13-df530dd3ed8c'
+//   }
+// })
+//   .then(res => res.json())
+//   .then((result) => {
+//     console.log(result);
+//   });
 
 
 // --------------------------------------------------------------------------------------
