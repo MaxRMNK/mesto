@@ -94,10 +94,6 @@ class Card {
     if (this._isLikedCard()) {
       this._elementLikeButton.classList.add('element__like_active');
     }
-    // else {
-    //   this._elementLikeButton.classList.remove('element__like_active');
-    // }
-
 
   	return this._element;
   }
