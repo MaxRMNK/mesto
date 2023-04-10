@@ -22,7 +22,7 @@ export default class Popup {
   open() {
     this._popupElement.classList.add('popup_opened'); // Показываю попап
     window.addEventListener('keydown', this._handleEscClose);
-    // !!! Нельзя включать слюшатели при открытии popup !!!
+    // !!! Нельзя включать слушатели при открытии popup !!!
     // При каждом открытии добавляются новые, а старые не исчезают
     // this.setEventListeners();
   }

@@ -7,7 +7,7 @@
   background-position: center center;
   transition: opacity 0.1s linear 0s;
   cursor: pointer;
-  flex: 0 0 auto;
+  /* flex: 0 0 auto; */
   border: 0;
   background-color: transparent;
   padding: 0;

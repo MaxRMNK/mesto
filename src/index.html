@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Пришлось сделать т.к. в консоли FF все время показывалась ошибка, что фавиконки нет -->
   <link rel="icon" type="image/png" sizes="32x32" href="<%=require('./images/favicon-32x32.png')%>">
-  <!-- <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"> -->
-  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
-  <!-- <script type="module" src="./pages/index.js" defer></script> -->
+  <!-- <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="./pages/index.css">
+  <script type="module" src="./pages/index.js" defer></script> -->
   <title>Mesto</title>
 </head>
 
@@ -21,8 +21,10 @@
 
   <main class="content">
     <section class="profile">
-      <!-- <img src="./images/cousteau.jpg" class="profile__avatar" alt="Аватар пользователя"> -->
-      <img src="<%=require('./images/cousteau.jpg')%>" class="profile__avatar" alt="Аватар пользователя">
+      <button class="profile__avatar-button" type="button" aria-label="Редактировать">
+        <!-- <img src="./images/cousteau.jpg" class="profile__avatar" alt="Аватар пользователя"> -->
+        <img src="<%=require('./images/default-avatar.png')%>" class="profile__avatar" alt="Аватар пользователя">
+      </button>
       <div class="profile__info">
         <div class="profile__text">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -49,6 +51,25 @@
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
 
+  <!-- Попап редактирования Аватара -->
+  <div class="popup popup_edit-avatar">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <h3 class="popup__header">Обновить аватар</h3>
+      <form action="#" class="popup__form popup__form_edit-avatar" name="editAvatarForm" novalidate>
+        <input
+          type="url"
+          class="popup__input popup__input_type_avatar"
+          id="input-avatar"
+          name="editAvatar"
+          placeholder="Ссылка на картинку"
+          required>
+        <span class="popup__error input-avatar-error"></span>
+        <button class="popup__button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Попап редактирования имени и профессии -->
   <div class="popup popup_edit-profile">
     <div class="popup__container">
@@ -63,8 +84,7 @@
           placeholder="Имя"
           minlength="2"
           maxlength="40"
-          required
-          >
+          required>
         <span class="popup__error input-name-error"></span>
 
         <input
@@ -75,8 +95,7 @@
           placeholder="Профессия"
           minlength="2"
           maxlength="200"
-          required
-          >
+          required>
         <span class="popup__error input-job-error"></span>
 
         <button class="popup__button" type="submit">Сохранить</button>
@@ -119,8 +138,20 @@
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
       <figure class="popup__illustration">
         <img class="popup__large-image" src="<%=require('./images/default.jpg')%>" alt="Описание">
+        <!-- <img class="popup__large-image" src="./images/default.jpg" alt="Описание"> -->
         <figcaption class="popup__caption-image">Название</figcaption>
       </figure>
+    </div>
+  </div>
+
+  <!-- Попап подтверждения -->
+  <div class="popup popup_confirm">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <h3 class="popup__header">Вы уверены?</h3>
+      <form action="#" class="popup__form popup__form-confirm" name="confirmForm">
+        <button class="popup__button" type="submit">Да</button>
+      </form>
     </div>
   </div>
 
@@ -130,7 +161,10 @@
       <img class="element__image">
       <div class="element__caption">
         <h2 class="element__header"></h2>
-        <button class="element__like" type="button" aria-label="Нравится"></button>
+        <div class="element__like-container">
+          <button class="element__like" type="button" aria-label="Нравится"></button>
+          <span class="element__like-counter">0</span>
+        </div>
       </div>
       <button class="element__delete" type="button" aria-label="Удалить"></button>
     </article>

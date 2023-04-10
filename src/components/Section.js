@@ -17,7 +17,8 @@ export default class Section {
   }
 
   addItem(element) { // Добавляет карточку на страницу
-    this._section.prepend(element);
+    // this._section.prepend(element);
+    this._section.append(element); // !!! ВЕРНУТЬ СТРОКУ ВЫШЕ !!!
   }
 }
 
