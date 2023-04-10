@@ -6,20 +6,27 @@ export default class Api {
     // this._contentType = options.headers['Content-Type'];
   }
 
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
+
+    // .then(res => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
+    // });
+  }
+
   // получить список всех карточек в виде массива (GET)
   getInitialCards() {
     return fetch(`${this._urlApi}/cards`, {
       //method: 'GET',
       headers: {authorization: this._token},
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(this._getResponseData);
   }
 
   // получить данные пользователя (GET)
@@ -28,13 +35,7 @@ export default class Api {
       //method: 'GET',
       headers: {authorization: this._token},
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      });
+      .then(this._getResponseData);
   }
 
   // Выводим информацию на страницу только если исполнились оба промиса - загрузка профиля пользователя и загрузка карточек
@@ -55,13 +56,7 @@ export default class Api {
         about: about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      });
+      .then(this._getResponseData);
   }
 
   // заменить аватар (PATCH)
@@ -71,13 +66,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({ avatar: avatar })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      });
+      .then(this._getResponseData);
   }
 
   // добавить карточку (POST)
@@ -87,13 +76,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      });
+      .then(this._getResponseData);
   }
 
   // удалить карточку (DELETE)
@@ -102,13 +85,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-    });
+      .then(this._getResponseData);
   }
 
   // “залайкать” карточку (PUT)
@@ -121,25 +98,13 @@ export default class Api {
         method: 'PUT',
         headers: this._headers
       })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      })
+        .then(this._getResponseData);
     } else {
       return fetch(`${this._urlApi}/cards/${id}/likes`, {
         method: 'DELETE',
         headers: this._headers
       })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка: ${res.status}`); // если ошибка, отклоняем промис
-      })
+        .then(this._getResponseData);
     }
   }
 

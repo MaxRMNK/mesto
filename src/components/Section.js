@@ -7,7 +7,8 @@ export default class Section {
 
   renderItems(data) { // отвечает за отрисовку всех элементов в Section
     // В коротких строках можно убрать создание лишних переменных: коммент ревьюера, ПР8
-    data.forEach (item => this._rendererFn(item));
+    data.reverse().forEach( item => this._rendererFn(item) );
+    // Добавил .reverse(), т.к. forEach перебирает карточки по одной и при загрузке страницы самые новые оказываются в самом низу
 
     // // Это то же самое, что выше:
     // // Сделал const потому что "data" кроме как здесь больше ни где не используется,
@@ -17,8 +18,8 @@ export default class Section {
   }
 
   addItem(element) { // Добавляет карточку на страницу
-    // this._section.prepend(element);
-    this._section.append(element); // !!! ВЕРНУТЬ СТРОКУ ВЫШЕ !!!
+    this._section.prepend(element);
+    // this._section.append(element); // !!! ВЕРНУТЬ СТРОКУ ВЫШЕ !!!
   }
 }
 

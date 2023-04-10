@@ -38,7 +38,7 @@ export default class PopupWithForm extends Popup {
       event.preventDefault(); // Отменяет стандартную отправку формы
       // console.log('this._getInputValues()', this._getInputValues());
       this._handleFormSubmitFn( this._getInputValues() );
-      this.close();
+      // this.close(); // Перенес в index.js, в блоки then
       //this._form.reset(); // Очистка полей формы при отправке. См.примечание внизу
     });
   }

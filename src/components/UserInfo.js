@@ -20,7 +20,7 @@ export default class UserInfo {
 
   getUserAvatar() {
     this._avatarProfile = this._avatar.src;
-    console.log(this._avatarProfile);
+    // console.log(this._avatarProfile);
 
     return {avatar: this._avatarProfile}
   }

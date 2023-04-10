@@ -114,6 +114,7 @@ function handleFormSubmitProfile(inputData) {
       userInfo.setUserInfo({name: result.name, about: result.about});
       // console.log({name: inputData.editName, about: inputData.editJob});
       // userInfo.setUserInfo({name: inputData.editName, about: inputData.editJob});
+      popupFormEditProfile.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -161,6 +162,7 @@ function handleFormSubmitAvatar(inputData) {
     // Затем, если предыдущая операция была успешной, обновляется информация на странице
     .then((result) => {
       userInfo.setUserAvatar({ avatar: result.avatar });
+      popupFormEditAvatar.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -173,7 +175,7 @@ function handleFormSubmitAvatar(inputData) {
 buttonEditAvatar.addEventListener('click', function () {
   // Подставляет в поля формы текущие значения из текста страницы
   const data = userInfo.getUserAvatar();
-  inputUrlAvatar.value = data.avatar;
+  // inputUrlAvatar.value = data.avatar;
 
   formValidationEditAvatar.resetValidateEror();
 
@@ -208,21 +210,19 @@ popupConfirm.setEventListeners();
 
 // Заменяет Картинку и Описание в popup картинки, открытвает popup.
 function handleDeleteCard(idCard, thisCard) {
+  // console.log('this 2', thisCard);
   popupConfirm.confirmDeletion(idCard, thisCard, deleteThisCard);
 
   popupConfirm.open();
 }
 
 function deleteThisCard(idCard, thisCard) {
-  // console.log(idCard);
-  // console.log(thisCard);
-
   popupConfirm.renderSending(true);
 
   api.deleteCard(idCard)
     .then(result => {
-      console.log('Удалено: ', result);
-      thisCard.remove();
+      // console.log('Удалено: ', result);
+      thisCard.deleteCard();
       popupConfirm.close();
     })
     .catch((err) => {
@@ -287,6 +287,7 @@ function handleFormSubmitCard(inputData) {
       // console.log(result);
       // В result объект полной информации карточки. addCard использует только то что нужно - name и link
       addCard(result);
+      popupFormAddCard.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль

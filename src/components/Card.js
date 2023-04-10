@@ -24,13 +24,19 @@ class Card {
         .cloneNode(true);
   }
 
-  _deleteCard() {
-    // this._element.remove();
-    // // ПР8
-    // // При удалении экземпляра класса его дополнительно (после удаления) нужно занулять - "this._element = null".
-    // // Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
-    // this._element = null;
-    this._handleDeleteCardFn(this._idCard, this._element)
+  // _deleteCard() {
+  //   // this._element.remove();
+  //   // // ПР8
+  //   // // При удалении экземпляра класса его дополнительно (после удаления) нужно занулять - "this._element = null".
+  //   // // Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
+  //   // this._element = null;
+  //   this._handleDeleteCardFn(this._idCard, this._element)
+  // }
+
+  deleteCard() {
+    // console.log('this ???', this);
+    this._element.remove();
+    this._element = null;
   }
 
   _isUserCard() {
@@ -63,9 +69,12 @@ class Card {
   _addEventListeners() {
     this._elementLikeButton.addEventListener('click', (evt) => { this._setLikes(evt) });
 
-    // this._elementDeleteButton.addEventListener('click', () => { this._deleteCard(); });
+    // if (this._isUserCard()) { // Слушатель устанавливается ТОЛЬКО для моих карточек
+    //   this._elementDeleteButton.addEventListener('click', () => { this._deleteCard(); });
+    // }
+
     if (this._isUserCard()) { // Слушатель устанавливается ТОЛЬКО для моих карточек
-      this._elementDeleteButton.addEventListener('click', () => { this._deleteCard(); });
+      this._elementDeleteButton.addEventListener('click', () => { this._handleDeleteCardFn(this._idCard, this) });
     }
 
     // Вариант 1. вызов функции полученной в конструктор - Просмотр картинки
