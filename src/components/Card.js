@@ -33,7 +33,7 @@ class Card {
   //   this._handleDeleteCardFn(this._idCard, this._element)
   // }
 
-  deleteCard() {
+  deleteCardCompletely() { // Переименовал метод после сдачи ПР9
     // console.log('this ???', this);
     this._element.remove();
     this._element = null;
@@ -50,21 +50,19 @@ class Card {
     });
   }
 
+  // // Вариант 2. _setLikes и togleLikeCard доработал по рекомендации ревьюера.
+  // // Исходную версию смотри в конце файла
   _setLikes(evt) {
-    let isLiked = evt.target.classList.contains('element__like_active');
-    // let isLiked2 = this._isLikedCard(); // Не работает при повторном переключении лайка
-    // console.log('isLiked evt', isLiked);
-    // console.log('isLiked2 _isLikedCard', isLiked2);
-
+    // let isLiked = evt.target.classList.contains('element__like_active');
+    let isLiked = this._isLikedCard(); // Заработало после доработки по подсказке от ревьюера, см. "Вариант 1" ниже.
     this._likeCardFn(this, this._idCard, isLiked);
   }
 
   togleLikeCard(data) {
-    // console.log(data);
+    this._dataLikes = data.likes;
     this._elementLikeButton.classList.toggle('element__like_active');
     this._elementLikeCounter.textContent = data.likes.length;
   }
-
 
   _addEventListeners() {
     this._elementLikeButton.addEventListener('click', (evt) => { this._setLikes(evt) });
@@ -109,3 +107,26 @@ class Card {
 }
 
 export default Card;
+
+
+  // // Вариант 1. Его приняли в ПР9. Доработал по рекомендации ревьюера.
+  // // Исправленную версию _setLikes и togleLikeCard смотри выше.
+  // // ------------------
+  // _setLikes(evt) {
+  //   let isLiked = evt.target.classList.contains('element__like_active'); // Работает
+  //   // let isLiked2 = this._isLikedCard(); // Не работает при повторном переключении лайка
+  //   // ПР9. Коммент ревьюера:
+  //   // Потому что при любом изменении лайка вы вызываете метод togleLikeCard
+  //   // в который передаете измененный массив, вот только в классе его не сохраняете,
+  //   // поэтому и перестают работать методы.
+  //   // А вот если в togleLikeCard еще дописать:
+  //   // this._dataLikes = data;
+  //   // Тогда массив обновится и все остальное будет работать
+  //   // ------------------
+  //   // Ревьюер чуть-чуть ошибся, надо: this._dataLikes = data.likes;
+  //   this._likeCardFn(this, this._idCard, isLiked);
+  // }
+  // togleLikeCard(data) {
+  //   this._elementLikeButton.classList.toggle('element__like_active');
+  //   this._elementLikeCounter.textContent = data.likes.length;
+  // }

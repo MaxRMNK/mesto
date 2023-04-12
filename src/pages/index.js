@@ -222,7 +222,7 @@ function deleteThisCard(idCard, thisCard) {
   api.deleteCard(idCard)
     .then(result => {
       // console.log('Удалено: ', result);
-      thisCard.deleteCard();
+      thisCard.deleteCardCompletely(); // Переименовал метод после сдачи ПР9
       popupConfirm.close();
     })
     .catch((err) => {
