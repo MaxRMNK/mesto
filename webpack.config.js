@@ -7,38 +7,59 @@ module.exports = {
   entry: { main: './src/pages/index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    // filename: 'main.js',
+    filename: 'main.[hash].js',
     publicPath: '',
   },
   mode: 'development',
   devServer: {
-    static: path.resolve(__dirname, './dist'),
+    static: path.resolve(__dirname, 'dist'),
     open: true,
     compress: true,
-    port: 8080
+    port: 8080,
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: '/node_modules/',
       },
-	  {
-	    // правило для обработки файлов
-        // регулярное выражение, которое ищет все файлы с такими расширениями
-        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+      // {
+      //   // Было. По учебнику.
+      //   // правило для обработки файлов
+      //   // регулярное выражение, которое ищет все файлы с такими расширениями
+      //   test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+      //   type: 'asset/resource',
+      // },
+      {
+        // Сделал по Вебинару "Работа с Webpack - Виктор Малий"
+        // правило для обработки картинок
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
         type: 'asset/resource',
-      },
-	  {
-        // применять это правило только к CSS-файлам
-		test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, {
-          loader: 'css-loader',
-		  // добавьте объект options
-          options: { importLoaders: 1 }
+        generator: {
+          filename: 'images/[name].[hash][ext]',
         },
-        'postcss-loader']
+      },
+      {
+        // правило для обработки шрифтов
+        test: /\.(woff(2)?|eot|ttf|otf)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash][ext]',
+        },
+      },
+      {
+        // применять это правило только к CSS-файлам
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+          },
+          'postcss-loader'
+        ],
       },
     ]
   },
@@ -47,6 +68,6 @@ module.exports = {
       template: './src/index.html'
     }),
     new CleanWebpackPlugin(),
-	new MiniCssExtractPlugin() // подключение плагина для объединения файлов
+	  new MiniCssExtractPlugin(), // подключение плагина для объединения файлов
   ]
 };
