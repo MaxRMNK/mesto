@@ -9,8 +9,8 @@
 Сайт создан с использованием изученных технологий: flexbox и grid-верстки, анимации элементов, базового JavaScript, а также построения структуры классов и файлов по методологии БЭМ.
 
 ## Макет
-[Макет сайта в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-[Макет Popup в Figma (ПР.9)](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=0%3A1&mode=dev)
+- [Макет сайта в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+- [Макет Popup в Figma (ПР.9)](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=0%3A1&mode=dev)
 
 ## История изменений
 ### Курс 3
@@ -55,3 +55,19 @@
 
 ## Доработка проекта
 В рамках учебной программы, этот сайт будет несколько раз дорабатываться и переписываться, но уже в других репозиториях.
+
+## Разворачиваем проект локально:
+1. Склонируйте проект, перейдите в папку `/mesto`
+    ```shell
+    git clone git@github.com:MaxRMNK/mesto.git
+    cd mesto
+    ```
+2. Убедитесь, что у вас устновлен Node.js с библиотекой пакетов NPM
+    ```shell
+    node -v # проверка версии Node.js
+    npm -v # проверка версии NPM
+    ```
+3. Установите проект и его зависимости
+    ```shell
+    npm install
+    ```
